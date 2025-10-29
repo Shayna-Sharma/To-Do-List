@@ -1,0 +1,178 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box; /*box-sizing = border-box controls how the total width and height of an element are calculated. border-box means the width and height include the content + padding + border. whereas by default box-sizing = content-box, it means the width and height we set apply only to the content area and the padding and border are added outside of that width and height.
+    but 
+    box-sizing = border-box is useful 1) as it is easier to create responsive layouts. 2) keeps elements consistent in size regardless of padding or border. */
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    padding: 10px;
+    background: linear-gradient(135deg , #153677, #4e085f);
+    /*in linear-gradient(), the first angle like here 135deg, defines the direction in which the gradient flows- in other words, where the first color starts and where the last color ends.The angle is measured clockwise, starting from the top 0deg.
+    so, 0deg = from bottom to top = Gradient goes upward
+        90deg = from left to right = Gradient goes horizontally
+        180deg = from top to bottom = Gradient goes downwards
+        270deg = from right to left = Gradient goes horizontally left 
+        
+    here 0deg will be pointing upwards, like a compass needle pointing north, then each degree rotates clockwise around the box. so the directions will be 0deg(|,upwards), 90deg( -> ), 180deg(|,downwards), 270deg( <- )    */
+}
+.todo-app{
+    max-width: 40%;
+    min-height: 300px;
+    background-color: #ffff;
+    margin: 100px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.todo-heading{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.todo-heading h1{
+    color: #002765;
+    margin-bottom: 20px;
+}
+.todo-app .notes_logo{
+    width: 50px;
+    height: 45px;
+}
+.enter-input{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #edeef0;
+    border-radius: 40px;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+#input-box{
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    padding: 10px 70px 10px 10px ;
+    color: rgb(66, 65, 65);
+}
+.add{
+    border:none;
+    outline: none;
+    padding: 16px 35px;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 40px; 
+}
+ul li{
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 50px 12px 50px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    /*user-select is a CSS property that controls whether the user can select(highlight) text in an element. so user-select = none, prevents user from selecting or highlighting text inside that element.
+    without user-select:none, we can click and drag your mouse to highlight(select) the text.so by doing none, even if we try to drag our mouse over the text, it wont get highlighted- it behaves like part of the background.
+    why it is used? 
+    1) to prevent accidental selection- on buttons, links, draggable items, or icons where users may click multiple times.      2) to make ui elements feel smoother - prevents weird blue text highlights when clicking or dragging over menus, modals, or sliders.       3) to restrict copying - sometimes used to discourage text copying(eg, in certain protected content or apps). Note: its not a real security feature- users can still copy text from the source code.*/
+}
+ul li::before{
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url(images/circle_unchecked.jpeg);
+    background-size: cover;
+    background-position: center;
+    top: 8px;
+    left: 8px;
+}
+/*::before is a CSS psuedo-element that lets you insert extra content before the actual content of an element, without changing the HTML. This adds the icon before every <li> item, visually-but those images dont exist in the HTML itself.
+ie, ::before is used to add decorative or styling-related content before an element without touching the HTML, keeping the code cleaner, more maintainable, and more semantic. like if we have 50<li>, then instead of adding the img tag in front of all the lis, we just do that using a smaller command.
+but if the iamge or icon is the part of the actual ocntent(like a company logo or an important symbol), you should use a real <img> tag-because that's meaningful content.*/
+
+/*The content property is used with pseudo-elements(::before and ::after) to insert content into a webpage from CSS- without adding it in HTML. 
+SO content defines what appears inside ::before or ::after.
+content: 'text' -> adds visible text.
+content:  ' '   -> creates an empty psuedo-element(useful for styling shapes or icons)
+content: url('img.png') ->inserts an image.
+Because psuedo-elements like ::before and ::after wont appear at all unless we define the content property-even if you only want to use them for decoration. so, we use an empty string '' when we just want to create a shape, image, or effect-not actual text.*/
+
+ul li.checked{
+    /*why the ul li .checked was not working because the space means the descendant(child), not the element itself, so when we write a space between li and .checked, we're telling CSS to look for an element inside the <li>,not the <li> itself. so that was not working since the class has been given to the li itself ie, A space means “inside of,” while no space means “the element itself.” -- this is for the part of html which i have commented later so that it can added using JavaScript.*/
+    color: #555;
+    text-decoration: line-through;
+}
+ul li.checked::before{
+    background-image: url(images/circle_checked.png);   
+}
+
+ul li span{
+    position: absolute;
+    right: 0px;
+    top: 5px;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+}
+
+/*media queries */
+
+@media (max-width: 1085px){
+    .todo-app{
+        max-width: 50%;
+    }
+    #input-box{
+        padding: 10px 40px 10px 10px;
+    }
+    .add{
+        padding:  13px 28px;
+    }
+}
+
+/*for tablets and small laptops*/
+@media (max-width: 768px){
+   .todo-app{
+      max-width: 60%;
+   }
+   .todo-heading h1{
+       margin-bottom: 10px;
+   }
+   .todo-app .notes_logo{
+       width: 45px;
+       height: 40px;
+   }
+
+   .enter-input{
+    /* flex-wrap: wrap; */
+    border-radius: 40px;
+    /* padding-left: 2px;
+    padding-right: 20px; */
+    /* padding-bottom: 15px; */
+    margin-bottom: 25px;
+}
+#input-box{
+    font-size: 15px;
+    padding: 10px 40px 10px 10px ;
+}
+.add{
+    border:none;
+    outline: none;
+    padding: 16px 35px;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 40px; 
+}
+}
